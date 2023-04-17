@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Ex01</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="libs/three_ver97.js"></script>
+    <script>
+      var scene = new THREE.Scene();
+    </script>
+    <script src="libs/OrbitControls.js"></script>
+    <script src="Net.js"></script>
+    <script src="Game.js"></script>
+    <script src="UI.js"></script>
+    <script src="libs/OBJLoader.js"></script>
+    <script src="Board.js"></script>
+    <script src="Light.js"></script>
+    <script src="Thing.js"></script>
+    <script src="Main.js"></script>
+    <script>
+      function login() {
+        var usr = $("#usernameInput").val();
+        net.addUser(usr);
+      }
+    </script>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        display: block;
+        overflow: hidden;
+      }
+
+      #root {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        display: block;
+        box-sizing: border-box;
+      }
+
+      header {
+        display: block;
+        position: fixed;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        margin: 0 auto;
+      }
+
+      #loginWindow {
+        display: block;
+        /* block */
+        position: fixed;
+        left: 20%;
+        top: 20%;
+        width: 60%;
+        height: 60%;
+        font-size: 200%;
+        text-align: center;
+        background-color: rgb(31, 33, 46);
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+      }
+
+      #usernameInput {
+        margin: 0 auto;
+        display: block;
+        clear: both;
+        font-size: 200%;
+        text-align: center;
+        background-color: rgb(22, 23, 32);
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+      }
+
+      #loginButton {
+        margin: 30px auto;
+        padding: 10px;
+        display: block;
+        clear: both;
+        font-size: 200%;
+        text-align: center;
+        background-color: rgb(22, 23, 32);
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+      }
+
+      #reset {
+        display: none;
+        /* block */
+        margin: 0 auto;
+        width: 200px;
+        height: 100px;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: aqua;
+        border: 2px solid blue;
+      }
+
+      #messageBox {
+        opacity: 0;
+        z-index: -3;
+        display: block;
+        margin: 5px auto;
+        padding: 10px;
+        text-align: center;
+        background-color: rgb(22, 23, 32);
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+      }
+
+      #highScore {
+        opacity: 0;
+        z-index: -3;
+        text-align: center;
+        position: fixed;
+        background-color: rgb(31, 33, 46);
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+        font-size: 250%;
+        width: 60%;
+        height: 80%;
+        left: 20%;
+        top: 10%;
+        display: block;
+        box-sizing: border-box;
+      }
+
+      #list {
+        text-align: center;
+        position: absolute;
+        background-color: rgb(22, 23, 32);
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+        font-size: 250%;
+        width: 80%;
+        height: 60%;
+        left: 10%;
+        top: 30%;
+        display: block;
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 0;
+        margin: 0;
+      }
+
+      ul {
+        position: relative;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        font-size: 50%;
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 5px;
+      }
+
+      #headers {
+        width: 80%;
+        left: 10%;
+        top: 23%;
+        text-align: center;
+        position: absolute;
+        background-color: rgb(31, 33, 46);
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+        box-sizing: border-box;
+      }
+
+      #help {
+        width: 4vw;
+        height: 6vh;
+        right: 0vw;
+        bottom: 0vh;
+        text-align: center;
+        font-size: 200%;
+        position: absolute;
+        background-color: rgb(31, 33, 46);
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+        box-sizing: border-box;
+      }
+
+      #helpopen {
+        display: none;
+        width: 44vw;
+        height: 21vh;
+        right: 0vw;
+        bottom: 0vh;
+        text-align: left;
+        font-size: 200%;
+        padding: 3px;
+        position: absolute;
+        background-color: rgb(31, 33, 46);
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+        box-sizing: border-box;
+      }
+
+      #close {
+        width: 4vw;
+        height: 6vh;
+        right: 0vw;
+        top: 0vh;
+        text-align: center;
+        font-size: 100%;
+        position: absolute;
+        background-color: rgb(31, 33, 46);
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+        box-sizing: border-box;
+      }
+
+      .turns {
+        float: left;
+        width: 20%;
+        border-right: 6px ridge rgb(212, 160, 16);
+        box-sizing: border-box;
+      }
+
+      .winner {
+        float: left;
+        width: 40%;
+        border-right: 6px ridge rgb(212, 160, 16);
+        box-sizing: border-box;
+      }
+
+      .loser {
+        float: left;
+        width: 40%;
+      }
+
+      #newGame {
+        position: absolute;
+        display: block;
+        border: 6px ridge rgb(212, 160, 16);
+        color: rgb(212, 160, 16);
+        text-align: center;
+        box-sizing: border-box;
+        bottom: 10px;
+        font-size: 100%;
+        width: 30%;
+        left: 35%;
+        background-color: rgb(31, 33, 46);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="help">H</div>
+    <div id="helpopen">
+      Każdy gracz na zmiane stawia krążki na planszy,<br />
+      pierwszy kto ułoży krążki, tak aby cztery krążki<br />
+      w jednym kolorze stykały się w rzędzie wygrywa. <br />Aby wstawić krążek należy klinkąć w daną kolumnę.
+      <div id="close">X</div>
+    </div>
+    <header>
+      <h2 id="messageBox"></h2>
+    </header>
+
+    <div id="loginWindow">
+      <h1>TYPE YOUR NAME</h1>
+      <h1>AND CLICK LOGIN</h1>
+      <input type="text" id="usernameInput" />
+      <button id="loginButton" onclick="login()">LOGIN</button>
+    </div>
+
+    <div id="root"></div>
+
+    <div id="blocker"></div>
+
+    <div id="highScore">
+      <h1>HIGH SCORES</h1>
+      <div id="headers">
+        <div class="turns">
+          Turns
+        </div>
+        <div class="winner">
+          Winner
+        </div>
+        <div class="loser">
+          His opponent
+        </div>
+      </div>
+      <div id="list">
+        <ul id="highList"></ul>
+      </div>
+
+      <button id="newGame" onclick="net.resetArray()">NEW GAME</button>
+    </div>
+
+    <!-- <footer><button id="reset" onclick="net.resetArray()">RESET USERS</button></footer> -->
+  </body>
+</html>
